@@ -3,9 +3,11 @@ import { UncontrolledCarousel, Button } from 'reactstrap';
 import _ from 'lodash';
 
 import SAMPLE_DOGS from './dogs.json'; //a sample list of dogs (model)
+import { useParams } from 'react-router';
 
 function AdoptPage(props) {
-  let petName = ''; //REPLACE THIS WITH CORRECT VALUE
+  let {petName} = useParams(); //REPLACE THIS WITH CORRECT VALUE
+  console.log(petName)
 
   //pretend we loaded external data    
   let pet =  _.find(SAMPLE_DOGS, {name: petName}); //find pet in data

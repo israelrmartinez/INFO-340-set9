@@ -2,6 +2,7 @@ import React, { useState } from 'react'; //import React Component
 import {AboutPage, ResourcesPage} from './About';
 import AdoptPage from './AdoptPet';
 import './App.css'; //import css file!
+import { BrowserRouter as Router, Switch, Route, Link, Redirect, NavLink } from "react-router-dom";
 
 import SAMPLE_DOGS from './dogs.json'; //a sample list of dogs (model)
 
@@ -13,7 +14,7 @@ function App(props) {
     <div>
       <header className="jumbotron jumbotron-fluid py-4">
         <div className="container">
-          <h1>Adopt a Pet</h1>
+            <Link to="/"><h1>Adopt a Pet</h1></Link>
         </div>
       </header>
     
@@ -23,7 +24,13 @@ function App(props) {
             <AboutNav />
           </div>
           <div className="col-9">
-            <PetList pets={pets} />
+              <Switch>
+                <Route exact path="/"> <PetList pets={pets}/> </Route>
+                <Route path="/about"> <AboutPage/> </Route>
+                <Route path="/resources"><ResourcesPage/></Route>
+                <Route path="/adopt/:petName"><AdoptPage/></Route>
+                <Redirect to="/"></Redirect>
+              </Switch>
           </div>
         </div>
       </main>
@@ -40,9 +47,9 @@ function AboutNav() {
     <nav id="aboutLinks">
       <h2>About</h2>
       <ul className="list-unstyled">
-        <li><a href="/">Adopt a Pet</a></li>
-        <li><a href="/about">About Us</a></li>
-        <li><a href="/resources">Resources</a></li>
+        <li><NavLink exact to="/" activeClassName="activeLink">Adopt a Pet</NavLink></li>
+        <li><NavLink exact to="/about" activeClassName="activeLink">About Us</NavLink></li>
+        <li><NavLink exact to="/resources" activeClassName="activeLink">Resources</NavLink></li>
       </ul>
     </nav>
   );
@@ -65,9 +72,14 @@ function PetList(props) {
 }
 
 function PetCard(props) {
+  const [redirectTo, setRedirectTo] = useState(undefined);
 
   const handleClick = () => {
-    console.log("You clicked on", props.pet.name);
+    setRedirectTo('/adopt/' + props.pet.name);
+  }
+
+  if (redirectTo != undefined) {
+    return (<Redirect push to={redirectTo} />);
   }
 
   let pet = props.pet; //shortcut
