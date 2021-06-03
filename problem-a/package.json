@@ -33,8 +33,7 @@
     },
     "setupFiles": [
       "<rootDir>/node_modules/regenerator-runtime/runtime"
-    ],
-    "testEnvironment":"jsdom"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
