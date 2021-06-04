@@ -37,7 +37,8 @@
     },
     "setupFiles": [
       "<rootDir>/node_modules/regenerator-runtime/runtime"
-    ]
+    ],
+    "testEnvironment": "jsdom"
   },
   "eslintConfig": {
     "parserOptions": {
